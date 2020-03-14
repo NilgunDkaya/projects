@@ -1,0 +1,32 @@
+
+package homework3;
+
+public class Triangle extends Shape 
+{
+   Line l1,l2,l3;
+    double perimeter;
+      
+    public Triangle(Line l1,Line l2,Line l3)
+    {
+        super("Triangle");
+        this.l1=l1;
+        this.l2=l2;
+        this.l3=l3;
+        setPerimeter();
+    }
+    
+    public double setPerimeter()
+    {
+        perimeter=(l1.getLength()+l2.getLength()+l3.getLength());
+        return perimeter;
+    }   
+    
+    public double getPerimeter()
+    {
+        return perimeter;
+    }
+
+
+
+
+}
