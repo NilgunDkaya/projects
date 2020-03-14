@@ -1,0 +1,171 @@
+
+package homework3;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+public class Homework3 {
+
+    public static void main(String[] args) {
+  
+        
+       //Dosyadan geçerli üçgenleri yükler
+       Triangle[] ucgenler1= ucgenleriBul("c:/DATA/input_1.txt");
+       //Üçgenleri dosyaya yazdır
+       ucgenleriYazdir(ucgenler1,"c:/DATA/output_1.txt");
+       
+       
+        //Dosyadan geçerli üçgenleri yükler
+       Triangle[] ucgenler2= ucgenleriBul("c:/DATA/input_2.txt");
+       //Üçgenleri dosyaya yazdır
+       ucgenleriYazdir(ucgenler2,"c:/DATA/output_2.txt");
+       
+       
+       //Dosyadan geçerli üçgenleri yükler
+       Triangle[] ucgenler3= ucgenleriBul("c:/DATA/input_3.txt");
+       //Üçgenleri dosyaya yazdır
+       ucgenleriYazdir(ucgenler3,"c:/DATA/output_3.txt");
+        
+      
+    } 
+
+    public static Triangle[] ucgenleriBul(String inputdosya)
+    {
+      Point[] noktalar1;
+      
+      noktalar1=DosyadaNoktalariYukle(inputdosya);
+      
+      int satirsayisi=KacSatirVar(inputdosya);
+      
+      int triangelsize=Carp(satirsayisi)/(Carp(3)*Carp(satirsayisi-3));
+      Triangle[] ucgenler=new Triangle[triangelsize];
+      int index=0;
+      //noktaların kombinasyonunu buluyor
+        for (int i = 0; i < noktalar1.length-2; i++) {
+             //if (noktalar1[i]==null) break;
+            for (int j = i+1; j < noktalar1.length-1; j++) {
+                //if (noktalar1[j]==null) break;
+                for (int k = j+1; k < noktalar1.length; k++) {
+                   
+                    if (ucgenMi(noktalar1[i],noktalar1[j],noktalar1[k])==true) {
+                        //üç noktaya ait çizgileri oluşturuyor     
+                        Line l1=new Line(noktalar1[i], noktalar1[j]);
+                        Line l2=new Line(noktalar1[i], noktalar1[k]);
+                        Line l3=new Line(noktalar1[j], noktalar1[k]);
+                        double a=l1.getLength();
+                        double b=l2.getLength();
+                        double c=l3.getLength();
+
+                        ucgenler[index]=new Triangle(l1,l2,l2);
+                        //System.out.println( noktalar1[i].toString() +" " +noktalar1[j].toString()+" "+noktalar1[k].toString() +"ÜÇGEN" );
+                        index++;
+                    }
+                    else
+                    {
+                        //System.out.println( noktalar1[i].toString() +" " +noktalar1[j].toString()+" "+noktalar1[k].toString() +"ÜÇGEN DEĞİL" );
+                    }
+                }
+            }
+        }
+
+       return ucgenler;
+    
+    }
+    
+    
+    public static void ucgenleriYazdir(Triangle[] ucgenler,String outputdosya)
+    {
+     try {
+            FileWriter dosya1=new FileWriter(outputdosya, false);            
+            
+            BufferedWriter bw=new BufferedWriter(dosya1);
+            
+            for (int i = 0; i < ucgenler.length; i++) {
+                bw.write(i +", " + ucgenler[i].getPerimeter());
+                bw.newLine();
+            }
+            bw.close();
+           
+            
+        } catch (Exception e) {
+        }
+    
+    }
+    
+
+    public static int Carp(int sayi)
+    {//faktoriyeli hesaplıyor
+        int sonuc=1;
+        for (int i = 1; i <= sayi; i++) {
+            sonuc=sonuc*i;
+        }
+        return sonuc;
+    }
+    
+    
+    public static int KacSatirVar(String dosyaadi)
+    {   int kacsatir=0;
+        try {
+            FileReader dosya2=new FileReader(dosyaadi);
+            BufferedReader br=new BufferedReader(dosya2);
+            String satir;
+           
+            while((satir=br.readLine())!=null) {
+                kacsatir++;
+            }
+            br.close();
+        } catch (Exception e) {
+        }
+        
+        return kacsatir;
+    }
+    
+    public static Point[] DosyadaNoktalariYukle(String dosyaadi)
+    {
+        Point[] noktalar=new Point[KacSatirVar(dosyaadi)];
+        
+        try {
+            FileReader dosya2=new FileReader(dosyaadi);
+            BufferedReader br=new BufferedReader(dosya2);
+            String satir;
+            int i=0;
+            while((satir=br.readLine())!=null) {
+                String[] nokta=satir.split(",");
+                Double x=Double.parseDouble(nokta[0]);
+                Double y=Double.parseDouble(nokta[1]);
+                noktalar[i]=new Point(x,y);
+                i++;
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return noktalar;
+    }
+    
+    public static boolean ucgenMi(Point p1,Point p2, Point p3)
+    {
+        //(|a-b|<c<a+b, |a-c|<b<a+c, |b-c|<a<b+c)
+        Line l1=new Line(p1, p2);
+        Line l2=new Line(p1, p3);
+        Line l3=new Line(p2, p3);
+        double a=l1.getLength();
+        double b=l2.getLength();
+        double c=l3.getLength();
+        
+        if( ((Math.abs(a-b)<c) && (c< a+b))  && 
+             ((Math.abs(a-c)<b) && (b< a+c)) && 
+             ((Math.abs(b-c)<a) && (a< b+c)) )  {
+            
+            Triangle t1=new Triangle(l1, l2, l3);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+   
+}
