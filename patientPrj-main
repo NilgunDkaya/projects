@@ -1,0 +1,68 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hw2;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+/**
+ *
+ * @author Nilgun
+ */
+public class HW2 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) 
+    {
+        String line;
+        Patient patient[] = new Patient[20];
+        int i=0;
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader ("C:\\Users\\Admin\\Desktop\\hw2.txt")))
+        {
+            while((line = bufferedReader.readLine()) != null)
+            {
+                String [] arrayPatientInfo=line.split(" ");
+                patient[i]= new Patient();
+                patient[i].setAge(Integer.parseInt(arrayPatientInfo[0]));
+                patient[i].setName(arrayPatientInfo[1]);
+                patient[i].setLastname(arrayPatientInfo[2]);
+                patient[i].setProfession(arrayPatientInfo[3]);
+                patient[i].setBloodtype(arrayPatientInfo[4]);
+                patient[i].setHeight(Integer.parseInt(arrayPatientInfo[5]));
+                patient[i].setWeight(Integer.parseInt(arrayPatientInfo[6]));
+                //System.out.println(line);
+                
+                //System.out.println(patient[i].getWeight() + "    " +  i);
+                i++;
+            }
+            MergeSort mergeArray = new MergeSort();
+            mergeArray.sort(patient, 0, i-1);
+            System.out.println("Merge Sort:");
+            for(i=0;i<patient.length;i++)
+            {
+                System.out.println(patient[i].getAge() +" "+patient[i].getName()+" "+patient[i].getLastname()+" "+
+                        patient[i].getProfession()+" "+patient[i].getBloodtype()+" "+patient[i].getHeight()+" "+patient[i].getWeight()+" ");
+            }
+            
+            System.out.println("\n\n");
+         
+            MinHeapSort heapArray = new MinHeapSort();
+            heapArray.sort(patient);
+            System.out.println("Min Heap Sort:");
+            for (int j = (i-1); j>=0; j--)
+            {
+                System.out.println(patient[j].getAge() + " " + patient[j].getName() + " " + patient[j].getLastname() + " "+
+                        patient[j].getProfession() + " " + patient[j].getBloodtype() + " " + patient[j].getHeight() + " " + patient[j].getWeight() + " ");
+            }
+        }
+        catch(IllegalArgumentException | IOException e)
+        {
+           System.err.println("Exception:" + e.getMessage());
+        }
+    }
+}
