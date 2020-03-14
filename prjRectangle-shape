@@ -1,0 +1,22 @@
+
+package homework4;
+
+public abstract class Shape {
+
+    private String id;
+
+    public Shape(String s) {
+        this.id = s;
+    }
+
+    public abstract double setPerimeter() throws Exception;
+
+    public String getId() {
+        return id;
+    }
+
+    public String toString() {
+        return "Shape[id=" + id + "]";
+    }
+
+}
