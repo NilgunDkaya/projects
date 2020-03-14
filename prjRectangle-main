@@ -1,0 +1,201 @@
+
+package homework4;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
+public class Homework4 {
+
+    public static void main(String[] args) {
+   try {
+        //Dosyadan geçerli dikdörtgenleri yükler
+       Rectangle[] dikdortgenler1= dikdortgenleriBul("c:/DATA/input_1.txt");
+       //dikdörtgenleri dosyaya yazdır
+       dikdortgenleriYazdir(dikdortgenler1,"c:/DATA/output_1.txt");
+       
+       
+         //Dosyadan geçerli dikdörtgenleri yükler
+       Rectangle[] dikdortgenler2= dikdortgenleriBul("c:/DATA/input_2.txt");
+       //dikdörtgenleri dosyaya yazdır
+       dikdortgenleriYazdir(dikdortgenler2,"c:/DATA/output_2.txt");
+       
+       
+        //Dosyadan geçerli dikdörtgenleri yükler
+      Rectangle[] dikdortgenler3= dikdortgenleriBul("c:/DATA/input_3.txt");
+       //dikdörtgenleri dosyaya yazdır
+       dikdortgenleriYazdir(dikdortgenler3,"c:/DATA/output_3.txt");
+   }
+   catch (Exception e)
+   {
+    e.printStackTrace();
+   } 
+    }
+
+    /*{ private static Rectangle[] dikdortgenleriBul(String cdatAinput_1txt) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private static void dikdortgenleriYazdir(Rectangle[] dikdortgenler1, String cdatAoutput_1txt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }*/
+     public static Rectangle[] dikdortgenleriBul(String inputdosya) throws Exception
+    {
+      Point[] noktalar1;
+      
+      noktalar1=DosyadaNoktalariYukle(inputdosya);
+      
+      int satirsayisi=KacSatirVar(inputdosya);
+      //olası bütündikdörtgenlerin sayısını bulur
+      int rectanglesize=Carp(satirsayisi)/(Carp(4)*Carp(satirsayisi-4));
+      Rectangle[] dikdortgenler=new Rectangle[rectanglesize];
+      int index=0;
+      //noktaların kombinasyonunu buluyor
+        for (int i = 0; i < noktalar1.length-3; i++) {
+             //if (noktalar1[i]==null) break;
+            for (int j = i+1; j < noktalar1.length-2; j++) {
+                //if (noktalar1[j]==null) break;
+                for (int k = j+1; k < noktalar1.length-1; k++) {
+                    
+                    for (int m=k+1; m < noktalar1.length; m++) {
+                    if (dikdortgenMi(noktalar1[i],noktalar1[j],noktalar1[k],noktalar1[m])==true) {
+                        //dört noktaya ait çizgileri oluşturuyor     
+                        Line l1=new Line(noktalar1[i], noktalar1[j]);
+                        Line l2=new Line(noktalar1[i], noktalar1[k]);
+                        Line l3=new Line(noktalar1[i], noktalar1[m]);
+                        Line l4=new Line(noktalar1[j], noktalar1[k]);
+                        Line l5=new Line(noktalar1[j], noktalar1[m]);
+                        Line l6=new Line(noktalar1[k], noktalar1[m]);
+                        
+                        double a=l1.getLength();
+                        double b=l2.getLength();
+                        double c=l3.getLength();
+                        double d=l4.getLength();
+                        double e=l5.getLength();
+                        double f=l6.getLength();
+
+                        dikdortgenler[index]=new Rectangle(l1,l2);
+                        //System.out.println( noktalar1[i].toString() +" " +noktalar1[j].toString()+" "+noktalar1[k].toString()+noktalar1[m].toString()+" " +DIKDORTGEN" );
+                        index++;
+                    }
+                    else
+                    {
+                        //System.out.println( noktalar1[i].toString() +" " +noktalar1[j].toString()+" "+noktalar1[k].toString()+noktalar1[m].toString()+" " +DIKDORTGEN DEGIL" );
+                    }
+                  }
+               }
+            }
+        }
+
+       return dikdortgenler;
+    
+    }
+    
+    
+    public static void dikdorgenleriYazdir(Rectangle[] dikdortgenler,String outputdosya) throws IOException
+    {
+     try {
+            FileWriter dosya1=new FileWriter(outputdosya, false);            
+            
+            BufferedWriter bw=new BufferedWriter(dosya1);
+            
+            for (int i = 0; i < dikdortgenler.length; i++) {
+                if (dikdortgenler[i]!=null)
+                {
+                    bw.write(i +", " + String.format("%.2f",dikdortgenler[i].getPerimeter()));
+                    bw.newLine();
+                }
+            }
+            bw.close();
+           
+            
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
+
+    public static int Carp(int sayi)
+    {//faktoriyeli hesaplıyor
+        int sonuc=1;
+        for (int i = 1; i <= sayi; i++) {
+            sonuc=sonuc*i;
+        }
+        return sonuc;
+    }
+    
+    /***
+     * Dosyada kaç satır olduğunu bulur
+     * @param dosyaadi açılacak dosya adı
+     * @return satır sayısı döner
+     */
+    public static int KacSatirVar(String dosyaadi)
+    {   int kacsatir=0;
+        try {
+            FileReader dosya2=new FileReader(dosyaadi);
+            BufferedReader br=new BufferedReader(dosya2);
+            String satir;
+           
+            while((satir=br.readLine())!=null) {
+                kacsatir++;
+            }
+            br.close();
+        } catch (Exception e) {
+        }
+        
+        return kacsatir;
+    }
+    
+    public static Point[] DosyadaNoktalariYukle(String dosyaadi)
+    {
+        Point[] noktalar=new Point[KacSatirVar(dosyaadi)];
+        
+        try {
+            FileReader dosya2=new FileReader(dosyaadi);
+            BufferedReader br=new BufferedReader(dosya2);
+            String satir;
+            int i=0;
+            while((satir=br.readLine())!=null) {
+                String[] nokta=satir.split(",");
+                Double x=Double.parseDouble(nokta[0]);
+                Double y=Double.parseDouble(nokta[1]);
+                noktalar[i]=new Point(x,y);
+                i++;
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return noktalar;
+    }
+    
+    public static boolean dikdortgenMi(Point p1,Point p2, Point p3, Point p4) throws Exception
+    {
+        Line l1=new Line(p1, p2);
+        Line l2=new Line(p2, p3);
+        Line l3=new Line(p3, p4);
+        Line l4=new Line(p1, p4);
+       
+        double a=l1.getLength();
+        double b=l2.getLength();
+        double c=l3.getLength();
+        double d=l4.getLength();
+   
+        if( a*b==-1 && b*c==-1 && c*d==-1)  {
+            
+            Rectangle t1=new Rectangle(l1, l2);
+            Rectangle t2=new Rectangle(l2, l3);
+            Rectangle t3=new Rectangle(l3, l4);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+   
+}
