@@ -1,0 +1,87 @@
+package hw;
+
+import java.util.ArrayList;
+
+public class binarytree {
+	static String s="";
+	public static  Node root;
+	int id;
+	int[][] adjM;
+	String[]city;
+	public binarytree(){
+		this.root = null;
+	}
+
+
+	public void insert(int id,int adj[][],String city[]){
+		Node newNode = new Node(id,adj,city);
+		this.id=id;
+		this.adjM=adj;
+		this.city=city;
+		if(root==null){
+			root = newNode;
+			return;
+		}
+		Node current = root;
+		Node parent = null;
+		while(true){
+			parent = current;
+			if(id<current.data){				
+				current = current.left;
+				if(current==null){
+					parent.left = newNode;
+					return;
+				}
+			}else{
+				current = current.right;
+				if(current==null){
+					parent.right = newNode;
+					return;
+				}
+			}
+		}
+	}
+	public String display(Node root){
+		
+		if(root!=null){	
+			String datas;
+			display(root.left);			
+			display(root.right);
+			System.out.print(root.data+" ");
+			s=s+root.data+" ";
+			
+		}
+		return s;
+	}
+	public Node search(Node root,int key) {
+		
+	    if (root==null || root.data==key)
+	        return root;
+	 
+	    
+	    if (root.data > key)
+	        return search(root.left, key);
+	 
+	    
+	    return search(root.right, key);
+		
+		
+	}
+}
+
+class Node{
+	int data;
+	Node left;
+	Node right;	
+	int [][] adj;
+	String[] city;
+	public Node(int data,int adj[][],String[] cities){
+		this.data = data;
+		left = null;
+		right = null;
+		this.adj=adj;
+		city=cities;
+		
+	}
+    
+}
