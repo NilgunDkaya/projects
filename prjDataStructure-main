@@ -1,0 +1,26 @@
+
+package hw1;
+
+public class HW1 {
+
+
+    public static void main(String[] args) {
+      
+        
+       String satir="This line is not a palindrome";
+       MyDeque<Character> kuyruk=new MyDeque<>();
+       
+      
+        for (int i = 0; i < satir.length(); i++) {
+            if (Character.isLetter(satir.charAt(i))) {
+                kuyruk.add(satir.charAt(i));
+            }
+        }
+        
+        //kuyruk.get(i)  == kuyruk.getkuyruk.size()-1-i)
+       
+        
+        
+    }
+    
+}
