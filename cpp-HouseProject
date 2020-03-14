@@ -1,0 +1,301 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+class houseType
+{
+	public:
+		houseType();
+		void setType(string typeHouse);
+		string getType();
+		string type;
+		
+};
+houseType::houseType()
+{
+	
+}
+void houseType::setType(string typeHouse)
+{
+	type=typeHouse;
+}
+
+string houseType::getType()
+{
+	if(type=="0")
+	return "single-storey";
+	else if(type=="1")
+	return "multi-storey";
+	else
+	return "storey don't know";
+}
+class house
+{
+	friend class apartment;
+	friend class dublex;
+	friend class triplex;
+	friend class villa;
+	friend class gardenHouse;
+	public:
+		house();
+		int age;
+		void display();
+		void getDisplay();
+		static int count;
+		static int counter;
+		virtual void price()
+		{
+			
+		}
+		void setKind(string kindHouse);
+		void setCentare(string centareHouse);
+		void setRoomOfNumber(string roomofnumberHouse);
+		void setAge(int ageHouse);
+		string getKind();
+		string getCentare();
+		string getRoomOfNumber();
+		int getAge();
+		int counterr();
+		
+		private:
+			string kind;
+			string centare;
+			string roomOfNumber;
+};
+house::house()
+{
+	count++;
+}
+
+int house::count=0;
+int house::counterr()
+{
+	return count;
+}
+class apartment:public house
+{
+	public:
+		apartment();
+		void price();
+};
+apartment::apartment()
+{
+	
+}
+void apartment::price()
+{
+	cout<<"250.000 Turkish Liras"<<endl;
+}
+class dublex:public house
+{
+	public:
+		dublex();
+		void price();
+};
+dublex::dublex()
+{
+	
+}
+void dublex::price()
+{
+	cout<<"280.000 Turkish Liras"<<endl;
+}
+class triplex:public house
+{
+	public:
+		triplex();
+		void price();
+};
+triplex::triplex()
+{
+	
+}
+void triplex::price()
+{
+	cout<<"350.000 Turkish Liras"<<endl;
+}
+class villa:public house
+{
+	public:
+		villa();
+		void price();
+};
+villa::villa()
+{
+	
+}
+void villa::price()
+{
+	cout<<"1.500.000 Turkish Liras"<<endl;
+}
+class gardenHouse:public house
+{
+	public:
+		gardenHouse();
+		void price();
+};
+gardenHouse::gardenHouse()
+{
+	
+}
+void gardenHouse::price()
+{
+	cout<<"450.000 Turkish Liras"<<endl;
+}
+
+
+
+void house::setKind(string kindHouse)
+{
+	kind=kindHouse;
+}
+string house::getKind()
+{
+	return kind;
+}
+
+void house::setAge(int ageHouse)
+{
+	age=ageHouse;
+}
+int house::getAge()
+{
+	return age;
+}
+
+void house::setCentare(string centareHouse)
+{
+	centare=centareHouse;
+}
+string house::getCentare()
+{
+	return centare;
+}
+
+void house::setRoomOfNumber(string roomOfNumberHouse)
+{
+	roomOfNumber=roomOfNumberHouse;
+}
+string house::getRoomOfNumber()
+{
+	return roomOfNumber;
+}
+
+void house::display()
+{
+	houseType obj1;
+	house obj2;
+	string hroom,htype,hkind,hcentare;
+	int hage;
+
+	
+	cout<<"Enter what kind of house:"<<endl;
+	cin>>hkind;
+	setKind(hkind);
+	
+	cout<<"Enter house age:"<<endl;
+	cin>>hage;
+	setAge(hage);
+	
+	cout<<"Enter centare of house:"<<endl;
+	cin>>hcentare;
+	setCentare(hcentare);
+	
+	cout<<"Enter room number of house:"<<endl;
+	cin>>hroom;
+	setRoomOfNumber(hroom);
+	
+	cout<<"\n";
+	
+	cout<<"Enter 0 for single-storey, 1 for multi-storey:"<<endl;
+	cin>>htype;
+	obj1.setType(htype);
+	
+	cout<<"House kind: "<<hkind<<"\nHouse age: "<<hage
+		<<"\nHouse centare: "<<hcentare<<"\nHouse room number: "<<hroom
+		<<"\nHouse type: "<<obj1.getType()<<endl;
+	cout<<"\n\n";	
+}
+void house::getDisplay()
+{
+	house h, *hPtr=&h;
+	apartment a, *aPtr=&a;
+	hPtr=&a;
+	dublex d, *dPtr=&d;
+	hPtr=&d;
+	triplex t, *tPtr=&t;
+	hPtr=&t;
+	villa v, *vPtr=&v;
+	hPtr=&v;
+	gardenHouse g, *gPtr=&g;
+	hPtr=&g;
+	apartment aObj;
+	dublex dObj;
+	triplex tObj;
+	villa vObj;
+	gardenHouse gObj;
+	int choice;
+	int count2=1;
+	
+		cout<<"           HOUSE           "<<endl;
+		cout<<"\n";
+		cout<<"For price information"<<endl;
+		cout<<"1.Apartment"<<endl;
+		cout<<"2.Dublex"<<endl;
+		cout<<"3.Triplex"<<endl;
+		cout<<"4.Villa"<<endl;
+		cout<<"5.Garden House"<<endl;
+		cout<<"\n\n";
+		cout<<"Enter your choice (0 for exit):"<<endl;
+		cin>>choice;
+		switch(choice)
+		{
+			case 1:
+				aPtr->price();
+				aObj.display();
+				break;
+			case 2:
+				dPtr->price();
+				dObj.display();
+				break;
+			case 3:
+				tPtr->price();
+				tObj.display();
+				break;
+			case 4:
+				vPtr->price();
+				vObj.display();
+				break;
+			case 5:
+				gPtr->price();
+				gObj.display();
+				break;
+			case 6:
+				exit(0);
+				break;		
+		}
+}
+int exit()
+{
+	return (0);
+}
+
+int main()
+{
+	house house;
+	int a;
+	house.getDisplay();
+	while(true){
+		cout<<"If you continue press 1, otherwise press 0 "<<endl;
+		cin>>a;
+		if(a==1){
+			house.getDisplay();
+		}else{
+			break;
+		}	
+		}
+	
+	getchar();
+	return 0;
+}
+
