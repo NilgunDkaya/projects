@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hw2;
+
+/**
+ *
+ * @author Nilgun
+ */
+public class MergeSort 
+{
+    void merge(Patient array[], int left, int middle, int right)
+    {
+        // Find sizes of two subarrays to be merged
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
+ 
+        Patient L[] = new Patient [n1]; //temp array for left
+        Patient R[] = new Patient [n2]; //temp array for right
+ 
+        //Copy data to temp arrays
+        for (int i=0; i<n1; ++i)
+            L[i] = array[left + i];
+        for (int j=0; j<n2; ++j)
+            R[j] = array[middle + 1+ j];
+ 
+        int i = 0, j = 0; // indexes of first and second subarrays
+ 
+        // Initial index of merged subarray array
+        int k = left;
+        while (i < n1 && j < n2)
+        {
+            if (L[i].getWeight() <= R[j].getWeight())
+            {
+                array[k] = L[i];
+                i++;
+            }
+            else
+            {
+                array[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+ 
+        /* Copy remaining elements of L[] if any */
+        while (i < n1)
+        {
+            array[k] = L[i];
+            i++;
+            k++;
+        }
+ 
+        /* Copy remaining elements of R[] if any */
+        while (j < n2)
+        {
+            array[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+ 
+    // Main function that sorts array[left..right] using merge()
+    void sort(Patient[] array, int left, int right)
+    {
+        if (left < right)
+        {
+            // Find the middle point
+            int middle = (left+right)/2;
+ 
+            // Sort first and second halves
+            sort(array, left, middle);
+            sort(array , middle+1, right);
+ 
+            // Merge the sorted halves
+            merge(array, left, middle, right);
+        }
+    }
+}
