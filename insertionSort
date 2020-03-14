@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include<time.h>
+#include<stdlib.h>
+
+void display();
+void insertionSort(int*);
+
+
+int array[100],i;
+int main()
+{
+	srand(time(NULL));
+	for(i=0; i<=100; i++)
+	
+	{
+		//randomly generates a number between 0 and 100
+		array[i] = (rand()%100)+1;
+	}
+	printf("Input Array: \n");
+	display();
+	insertionSort(array);
+	printf("Output Array: \n");
+	display();
+}
+void display() 
+{
+	int i;
+	printf("[");
+	for(i = 0;i<100;i++)
+	{
+		printf("%d ",array[i]);
+	}
+	printf("]\n");
+}
+void insertionSort(int *array) 
+{
+	int valueToInsert;
+	int position;
+	int i;
+	
+	for(i = 1; i < 100; i++) // loop through all numbers
+	{
+		valueToInsert = array[i]; // select a value to be inserted.
+		position = i; // select the position where number is to be inserted
+		// check if previous no. is larger than value to be inserted
+		while (position > 0 && array[position-1] > valueToInsert)
+		{
+			array[position] = array[position-1];
+			position--;
+			printf(" Item moved : %d\n" , array[position]);
+		}
+		if(position != i)
+		{
+			// insert the number at position 
+			printf(" Item inserted : %d, at position : %d\n" , valueToInsert,position);
+			array[position] = valueToInsert;
+		}
+		printf("Iteration %d#:",i);
+		display();
+	} 	
+}
