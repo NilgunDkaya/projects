@@ -1,0 +1,38 @@
+
+package hw1;
+
+import java.util.LinkedList;
+
+public class MyDeque<T> extends LinkedList<T> {
+
+//    push(x): Insert item x on the front end of the deque.
+//    pop(): Remove the front item from the deque and return it.
+//    inject(x): Insert item x on the rear end of the deque.
+//    eject(): Remove the rear item from the deque and return it.
+   
+    public void push(T item)
+    {
+        this.add(item);
+    }
+    
+    public T pop()
+    {
+        
+        T sonuc=this.get(this.size()-1);
+        this.remove(this.size()-1);
+        return sonuc;
+    }
+    
+    public void inject(T item)
+    {
+        this.addFirst(item);
+    }
+    
+    public T eject()
+    {
+        T sonuc=this.get(0);
+        this.remove(0);
+        return sonuc;
+    }
+    
+}
