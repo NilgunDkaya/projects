@@ -1,0 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hw2;
+
+import java.util.Scanner;
+
+
+public class HW2 {
+
+    /**added books count*/
+    static int bookcount = 0;
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        
+        Book[] books = new Book[100];
+        /** will keep keywords for every book while adding a book*/
+        String[] keywords;
+
+        String data;
+        
+        char choice;
+        
+        Scanner strinput = new Scanner(System.in);
+
+        while (true) {
+            /**show menu*/
+            System.out.println("Press A to insert a book");
+            System.out.println("Press D to delete a book");
+            System.out.println("Press S to sort all books");
+            System.out.println("Press X to display all books");
+            System.out.println("Press Q to exit");
+            System.out.print("Your choice:");
+            data = strinput.nextLine();
+            /**if nothing is entered display menu*/
+            if (data.trim().equals("")) {
+                continue;
+            }
+
+            /**first character of input string is command(choice)*/
+            choice = data.charAt(0);
+
+            /***/
+            String[] datas = data.substring(1).split(",");
+
+            if (choice == 'A') {
+                Book b = new Book();
+                /**set the book's properties with the input data*/
+                b.setBookName(datas[0].trim());
+                b.setAuthorName(datas[1].trim());
+                b.setIsbnNumber(datas[2].trim());
+                b.setIntnumPages(Integer.parseInt(datas[3].trim()));
+                b.setPubYear(Integer.parseInt(datas[4].trim()));
+
+                /**how much keyword is entered, then all of them will be inserted into keyword array*/
+                int kcount = datas.length - 5;
+                keywords = new String[kcount];
+
+                for (int i = 0; i < kcount; i++) {
+                    keywords[i] = new String(datas[i + 5].trim());
+                }
+                b.setKeyWords(keywords);
+
+                /**
+                 * show errors if errors occurs while setting field of class
+                 */
+                boolean erroroccured = false;
+                for (int i = 0; i < b.errs.length; i++) {
+                    if (b.errs[i] != null) {
+                        System.out.println(b.errs[i]);
+                        erroroccured=true;
+                    }
+                }
+                
+                /**if error is not found book will be added*/
+                if (erroroccured == false) {
+
+                    books[bookcount] = b;
+                    bookcount++;
+                    System.out.print("Added!");
+                }
+                else
+                {
+                    System.out.print("Error Occured!");
+                }
+
+            } else if (choice == 'D') {
+
+                delete(books, datas[0].trim());
+
+                System.out.print("Deleted!");
+
+            } else if (choice == 'S') {
+                
+                sort(books);
+                System.out.print(choice);
+                
+            } else if (choice == 'X') {
+                /**display all book's summary*/
+                for (int i = 0; i < books.length; i++) {
+
+                    if (books[i] != null) {
+                        books[i].displayBook();
+                    }
+                }
+
+            } else if (choice == 'Q') {
+                System.out.println("Good Byee");
+                break;
+            }
+        }
+
+    }
+
+    public static void sort(Book[] bookArray) {
+
+        for (int i = 0; i < bookArray.length; i++) {
+
+            for (int j = i+1; j < bookArray.length; j++) {
+                if (bookArray[j]==null) continue;
+                
+                if (bookArray[i].getIsbnNumber().compareTo(bookArray[j].getIsbnNumber())>0) {
+                    /**bookArray[i]'s isbnnumber is greater than bookArray[j]'s isbnnumber
+                     * content of the array elements will be swapped to each other
+                     * That's why, swap variable tmp which is type of Book will be used
+                     */
+                    Book tmp=new Book();
+                    tmp.setAuthorName(bookArray[i].getAuthorName());
+                    tmp.setBookName(bookArray[i].getBookName());
+                    tmp.setIntnumPages(bookArray[i].getIntnumPages());
+                    tmp.setIsbnNumber(bookArray[i].getIsbnNumber());
+                    tmp.setKeyWords(bookArray[i].getKeyWords());
+                    tmp.setPubYear(bookArray[i].getPubYear());
+
+                    bookArray[i].setAuthorName(bookArray[j].getAuthorName());
+                    bookArray[i].setBookName(bookArray[j].getBookName());
+                    bookArray[i].setIntnumPages(bookArray[j].getIntnumPages());
+                    bookArray[i].setIsbnNumber(bookArray[j].getIsbnNumber());
+                    bookArray[i].setKeyWords(bookArray[j].getKeyWords());
+                    bookArray[i].setPubYear(bookArray[j].getPubYear());
+
+                    bookArray[j].setAuthorName(tmp.getAuthorName());
+                    bookArray[j].setBookName(tmp.getBookName());
+                    bookArray[j].setIntnumPages(tmp.getIntnumPages());
+                    bookArray[j].setIsbnNumber(tmp.getIsbnNumber());
+                    bookArray[j].setKeyWords(tmp.getKeyWords());
+                    bookArray[j].setPubYear(tmp.getPubYear());
+                }
+            }
+        }
+    }
+
+    /**
+     *Delete the books if the keyword mathes with that book's keyword
+     * @param   bookArray is all books
+     * @param   aWord is the keyword that will be searched in the book's keywords
+     */
+    public static void delete(Book[] bookArray, String aWord) {
+
+        for (int i = 0; i < bookArray.length; i++) {
+            if (bookArray[i] != null) {
+                String[] kw = bookArray[i].getKeyWords();
+                for (int j = 0; j < kw.length; j++) {
+                    /**if keyword found in keyword array it must be deleted*/
+                    if (kw[j].equals(aWord)) {
+                        bookcount--;
+                        /**make book position null if keyword matches*/
+                        bookArray[i] = null;
+                        /**
+                         * Shift the next not null books to previous position
+                         */
+                        for (int k = i + 1; k < bookArray.length; k++) {
+                            bookArray[k - 1] = bookArray[k];
+                            bookArray[k] = null;
+                        }
+                        /**after shifting books go back to previous book*/
+                        i--;
+                    }
+                }
+
+            }
+        }
+
+    }
+}
