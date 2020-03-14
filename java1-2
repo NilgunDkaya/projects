@@ -1,0 +1,211 @@
+
+package hw2;
+
+import static hw2.HW2.bookcount;
+
+public class Book {
+
+    private String bookName;
+    private String authorName;
+    private String isbnNumber;
+    private int intnumPages;
+    private int pubYear;
+    private String[] keyWords;
+
+    public String[] errs = new String[6];
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        if (bookName.length() >= 3) {
+            this.bookName = bookName;
+        } else {
+            errs[0] = "book's name must have at least 3 letters";
+        }
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+
+        if (authorName.length() >= 3) {
+            this.authorName = authorName;
+        } else {
+            errs[1] = "author's name must have at least 3 letters";
+        }
+
+    }
+
+    public String getIsbnNumber() {
+        return isbnNumber;
+    }
+
+    public void setIsbnNumber(String isbnNumber) {
+
+        String tmp = "";
+
+        for (int i = 0; i < isbnNumber.length(); i++) {
+
+            /**
+             * whether check every character in isbnNumber is digit or not
+             */
+            if (Character.isDigit(isbnNumber.charAt(i))) {
+                tmp += isbnNumber.charAt(i);
+            }
+        }
+
+        if (tmp.length() == 13) {
+            this.isbnNumber = tmp;
+        } else {
+            errs[2] = "isbn  number must be 13 digit.";
+        }
+
+    }
+
+    public int getIntnumPages() {
+        return intnumPages;
+    }
+
+    public void setIntnumPages(int intnumPages) {
+        if (intnumPages > 0) {
+            this.intnumPages = intnumPages;
+        } else {
+            errs[3] = "page number must be possitive.";
+        }
+    }
+
+    public int getPubYear() {
+        return pubYear;
+    }
+
+    public void setPubYear(int pubYear) {
+        if (pubYear >= 1923 && pubYear <= 2016) {
+            this.pubYear = pubYear;
+        } else {
+            errs[4] = "publication year must be between 1923 and 2016";
+        }
+
+    }
+
+    public String[] getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(String[] keyWords) {
+        if (keyWords.length >= 3 && keyWords.length <= 5) {
+            this.keyWords = keyWords;
+        } else {
+            errs[5] = "keywords  must be  at least 3 words and most 5 words";
+        }
+    }
+
+    public Book() {
+
+    }
+
+    /**
+     * parameterized constructor
+     */
+    public Book(String bookName, String authorName, String isbnNumber, int intnumPages, int pubYear, String[] keyWords) {
+        /**
+         * check BookName
+         */
+        if (bookName.length() >= 3) {
+            this.bookName = bookName;
+        } else {
+            errs[0] = "book's name must have at least 3 letters";
+        }
+
+        /**
+         * check authorName
+         */
+        if (authorName.length() >= 3) {
+            this.authorName = authorName;
+        } else {
+            errs[1] = "author's name must have at least 3 letters";
+        }
+
+        /**
+         * check isbnNumber
+         */
+        String tmp = "";
+
+        for (int i = 0; i < isbnNumber.length(); i++) {
+
+            if (Character.isDigit(isbnNumber.charAt(i))) {
+                tmp += isbnNumber.charAt(i);
+            }
+        }
+
+        if (tmp.length() == 13) {
+            this.isbnNumber = tmp;
+        } else {
+            errs[2] = "isbn  number must be 13 digit.";
+        }
+
+        /**
+         * check number of pages
+         */
+        if (intnumPages > 0) {
+            this.intnumPages = intnumPages;
+        } else {
+            errs[3] = "page number must be possitive.";
+        }
+
+        /**
+         * check publication year
+         */
+        if (pubYear >= 1923 && pubYear <= 2016) {
+            this.pubYear = pubYear;
+        } else {
+            errs[4] = "publication year must be between 1923 and 2016";
+        }
+
+        /**
+         * check keywords
+         */
+        if (keyWords.length >= 3 && keyWords.length <= 5) {
+            this.keyWords = keyWords;
+        } else {
+            errs[5] = "keywords  must be  at least 3 words and most 5 words";
+        }
+    }
+
+
+    /** Search a keyword in book's keywords*/
+    public  boolean searchKeyWord(String aWord) {
+        String[] kw = this.getKeyWords();
+        for (int j = 0; j < kw.length; j++) {
+            /**if keyword found in keyword*/
+            if (kw[j].equals(aWord)) {
+               return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Shows all books in the array
+     */
+    public void displayBook() {
+
+        String booksummary = this.bookName + "," + this.authorName + "," + this.isbnNumber + "," + this.intnumPages + "," + this.pubYear;
+
+        /**
+         * Add keywords to booksummmary
+         */
+        for (int i = 0; i < keyWords.length; i++) {
+            booksummary += keyWords[i];
+
+            if (i != keyWords.length - 1) {
+                booksummary += ",";
+            }
+        }
+        System.out.println(booksummary);
+    }
+
+}
