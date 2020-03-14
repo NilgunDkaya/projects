@@ -1,0 +1,171 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void adamAsmaca(int ID, int maxLevel, int numWin,int playCount);
+void generateReport(int ID, int maxLevel, int numWin,int playCount);
+    
+int main()
+{
+	int playerID;
+	int numWin=0;
+	int playCount=0;
+	int maxLevel=1;
+	int choice;
+	 
+	printf("Enter the player ID: ");
+	scanf("%d", &playerID);
+	
+	while(choice!=2)
+	{
+	    printf("1.Start Game\n2.End Game\nEnter your choice: ");
+		scanf("%d", &choice);
+		if(choice==1)
+		{
+		    adamAsmaca(playerID, maxLevel, numWin, playCount );
+		}
+		else if(choice==2)
+		{
+			generateReport(playerID, maxLevel,numWin, playCount );
+		}
+		else{
+			printf("You entered invalid option!\n");
+		}
+	}
+}
+
+void adamAsmaca(int ID, int maxLevel, int numWin,int playCount){
+	int guess,digit1,digit2,digit3,digit4,digit5;
+	int counter=0,flag1=0, flag2=0, flag3=0, flag4=0, flag5=0;
+	int num,counterLim;
+	
+	if(maxLevel==1){
+		num = 100+(rand()%900);
+		printf("------LEVEL 1------\n");
+		printf("***\n");
+		counterLim = 7;
+	}
+	else if(maxLevel==2){
+		num = 1000+(rand()%9000);
+		printf("------LEVEL 2------\n");
+		printf("****\n");
+		counterLim = 6;	
+	}
+	else if(maxLevel>=3){
+		num=10000+(rand()%90000);
+		printf("------LEVEL 3------\n");
+		printf("*****\n");
+		counterLim = 5;
+	}
+	// right to left
+	
+	digit5=num/10000;			// 0 if the number has 3 or 4 digits
+	digit4=(num/1000)%10;		// 0 if the number has 3 digits
+	digit3=(num/100)%10;
+	digit2=(num/10)%10;
+	digit1=num%10;
+	
+	while(1)
+	{	
+		if(counter==counterLim){
+			printf("You lost the game!");
+			printf("The generated number was: %d",num);
+			printf("\n");
+			playCount+=1;
+			generateReport(ID, maxLevel,numWin, playCount );
+			break;
+		}
+		printf("Enter your guess: ");
+		scanf("%d", &guess);
+		counter++;	
+		if(guess<0||guess>9){
+			printf("You entered out of boundary!\n");
+			continue;
+		}	
+		if(maxLevel>=3){
+			if(guess==digit5 || flag5==1){
+				printf("%d",digit5);
+				flag5=1;
+			}
+			else{
+				printf("*");
+			}
+		}
+		if(maxLevel>=2){
+			if(guess==digit4 || flag4==1){
+				printf("%d",digit4);
+				flag4=1;
+			}
+			else{
+				printf("*");
+			}		
+		}
+		if(maxLevel>=1){
+			if(guess==digit3 || flag3==1){
+				printf("%d",digit3);
+				flag3=1;
+			}
+			else{
+				printf("*");
+			}
+			if(guess==digit2 || flag2==1){
+				printf("%d",digit2);
+				flag2=1;
+			}
+			else{
+				printf("*");
+			}
+			if(guess==digit1 || flag1==1){
+				printf("%d\n",digit1);
+				flag1=1;
+			}
+			else{
+				printf("*\n");
+			}			
+		}
+		if(maxLevel>=3){
+			if(flag5==1 && flag4==1 && flag3 ==1 && flag2==1 && flag1==1){
+				printf("You win the game!");
+				printf("The generated number is: %d",num);
+				printf("\n");
+				numWin+=1;
+				maxLevel+=1;
+				playCount+=1;
+				generateReport(ID, maxLevel,numWin, playCount );
+				break;
+			}
+		}
+		else if(maxLevel==2){
+			if(flag4==1 && flag3 ==1 && flag2==1 && flag1==1){
+				printf("You win the game!");
+				printf("The generated number is: %d",num);
+				printf("\n");
+				numWin+=1;
+				maxLevel+=1;
+				playCount+=1;
+				adamAsmaca(ID, maxLevel,numWin, playCount );
+				break;
+			}
+		}
+		else if(maxLevel==1){
+			if(flag3 ==1 && flag2==1 && flag1==1){
+				printf("You win the game!");
+				printf("The generated number is: %d",num);
+				printf("\n");
+				numWin+=1;
+				maxLevel+=1;
+				playCount+=1;
+				adamAsmaca(ID, maxLevel,numWin, playCount );
+				break;
+			}
+		}
+	}
+}
+void generateReport(int ID, int maxLevel, int numWin,int playCount){
+	printf("----------------REPORT----------------\n");
+	printf(" The ID is: %d\n",ID);
+	printf(" The number of plays is:%d\n",playCount);
+   	printf(" The number of wins is:%d\n",numWin);
+	printf(" The level is: %d",maxLevel);
+	printf("\n");
+}
+
