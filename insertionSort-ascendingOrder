@@ -1,0 +1,278 @@
+/* insertion sort ascending order */
+ 
+#include <stdio.h>
+ 
+int main()
+{
+  int n, array[1000], c, d, t;
+ 
+  printf("Enter number of elements\n");
+  scanf("%d", &n);
+ 
+  printf("Enter %d integers\n", n);
+ 
+  for (c = 0; c < n; c++) {
+    scanf("%d", &array[c]);
+  }
+ 
+  for (c = 1 ; c <= n - 1; c++) {
+    d = c;
+ 
+    while ( d > 0 && array[d] < array[d-1]) {
+      t          = array[d];
+      array[d]   = array[d-1];
+      array[d-1] = t;
+ 
+      d--;
+    }
+  }
+ 
+  printf("Sorted list in ascending order:\n");
+ 
+  for (c = 0; c <= n - 1; c++) {
+    printf("%d\n", array[c]);
+  }
+ 
+  return 0;
+}
+
+
+
+
+
+
+
+// C program for insertion sort
+#include <stdio.h>
+#include <math.h>
+
+/* Function to sort an array using insertion sort*/
+void insertionSort(int arr[], int n)
+{
+int i, key, j;
+for (i = 1; i < n; i++)
+{
+	key = arr[i];
+	j = i-1;
+
+	/* Move elements of arr[0..i-1], that are
+		greater than key, to one position ahead
+		of their current position */
+	while (j >= 0 && arr[j] > key)
+	{
+		arr[j+1] = arr[j];
+		j = j-1;
+	}
+	arr[j+1] = key;
+}
+}
+
+// A utility function ot print an array of size n
+void printArray(int arr[], int n)
+{
+int i;
+for (i=0; i < n; i++)
+	printf("%d ", arr[i]);
+printf("\n");
+}
+
+
+
+/* Driver program to test insertion sort */
+int main()
+{
+	int arr[] = {12, 11, 13, 5, 6};
+	int n = sizeof(arr)/sizeof(arr[0]);
+
+	insertionSort(arr, n);
+	printArray(arr, n);
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+
+int main()
+{
+  int n, c, d, t,sayac=0;
+
+  printf("Kac Tane Eleman Gireceksiniz\n");
+  scanf("%d", &n);
+  int dizi[n];
+
+
+  for (c = 0; c < n; c++) {
+  printf("Sayi gir\n");
+    scanf("%d", &dizi[c]);
+  }
+
+  for (c = 1 ; c <= n - 1; c++) {
+    d = c;
+
+    while ( d > 0 && dizi[d] < dizi[d-1]) {
+      t          = dizi[d];
+      dizi[d]   = dizi[d-1];
+      dizi[d-1] = t;
+  d--;
+  sayac++;
+   printf("\n\n     %d. adim\n\n",sayac);
+    for(int a=0;a<=n-1;a++){
+     printf("%d-",dizi[a]);
+ }
+    }
+    
+
+  }
+
+  printf("\nDizinin siralanmis hali :\n");
+
+  for (c = 0; c <= n - 1; c++) {
+    printf("%d\n", dizi[c]);
+  }
+
+  return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*Sorting Elements of an array in ascending order using insertion sort algorithm*/
+#include<stdio.h>
+int main()
+{
+	int data[100],n,temp,i,j;
+	printf("Enter number of terms(should be less than 100): ");
+	scanf("%d",&n);
+	printf("Enter elements: ");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&data[i]);
+	}
+	for(i=1;i<n;i++)
+	{
+		temp = data[i];
+		j=i-1;
+		while(temp<data[j] && j>=0)
+/*To sort elements in descending order, change temp<data[j] to temp>data[j] in above line.*/
+		{
+			data[j+1] = data[j];
+			--j;
+		}
+		data[j+1]=temp;
+	}
+	printf("In ascending order: ");
+	for(i=0; i<n; i++)
+		printf("%d\t",data[i]);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*This source code is also the implemention of  insertion sort algorithm to sort elements of array.*/
+/*This program is little complex because it contains multiple loops.*/
+/*Program to Sort array in descending order*/
+#include <stdio.h>
+int main()
+{
+    int data[100],n,i,j,hold,k;
+    printf("Enter number of terms(should be less than 100): ");
+    scanf("%d",&n);
+    printf("Enter elements: ");
+    for(i=0;i<=n-1;++i)
+    {
+       scanf("%d",&data[i]);
+    }
+    for(i=1;i<=n-1;++i)
+    {
+    for(j=0;j<i;++j)
+       if(data[j]<data[i])
+/*To sort elements in ascending order change < to > in above line.*/
+       {
+           hold=data[i];
+           k=i;
+           while(k!=j)
+           {
+               data[k]=data[k-1];
+               --k;
+           }
+           data[j]=hold;
+       }
+    }
+    printf("In descending Order: ");
+    for(i=0;i<=n-1;++i)
+     {
+       printf("%d    ",data[i]);
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+Program to sort n numbers using insertion sort.
+
+#include<stdio.h>
+
+void insertion_sort(int a[],int n)
+{
+    int i,j,item;
+    for(i=0;i<n;i++)
+    {
+        /* item to be inserted */
+        item = a[i];
+        /* Try from (i-1)th position */
+        j=i-1;
+        while(j>=0 && item<a[j])
+        {
+            A[j+1] = a[j] /* Move the item to the next position */
+            j--; /* and update the position */
+        }
+        A[j+1]=item; /* appropriate position found and so insert item */
+    }
+}
+
+void main()
+{
+    int i, n,a[20];
+    printf("Enter the no. of elements to sort n");
+    scanf("%d", &n);
+    printf("Enter n elements n");
+    for(i=0;i<n;i++)
+    scanf("%d",&a[i]);
+    insertion_sort(a,n);
+    printf("The sorted array is n");
+    for(i=0;i<n;i++)
+    
+    printf("%dn",a[i]);
+    
+}
