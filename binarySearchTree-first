@@ -1,0 +1,102 @@
+package hw;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class first {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stubScanner input=new Scanner(System.in);
+		BufferedReader br= new BufferedReader(new FileReader("input.txt"));	
+		Scanner inp=new Scanner(System.in);
+		int i=0;
+		String line;
+		binarytree binarytree=new binarytree();	
+		ArrayList <binarytree> tree=new ArrayList<binarytree>();
+		line=br.readLine();
+		while(line!= null) {
+			line.trim();
+			int zip=(Integer.parseInt(line.trim()));		
+			int counter=0;
+			ArrayList <String> city=new ArrayList<String>();
+			while(!(line=br.readLine()).matches(".*\\d+.*")) { 			 
+			  city.add(line.trim());
+			  System.out.println(city.get(counter));               
+			  counter++;				
+			}
+			int[][] arr=new int[counter][counter];
+			String[] numberS;			
+			for(int j=0;j<counter;j++) {	
+				numberS=line.split("\\s+");						
+				for(int k=0;k<counter;k++) {					
+					arr[j][k]=Integer.parseInt(numberS[k].trim());
+					System.out.print(arr[j][k]+" ");                  
+				}
+				line=br.readLine();
+				
+				System.out.println();
+				
+			}
+			String[] cities=new String[city.size()];
+			for(int k=0;k<city.size();k++) {
+				
+				cities[k]=city.get(k);
+			}
+			;
+			binarytree.insert(zip,arr,cities);
+			tree.add(i, binarytree);
+			i++;
+		}
+		
+    br.close();
+  //  bt.display(bt.root);
+    
+    //prim için sayı alma---------------------------------------------------
+    System.out.println("\nEnter your choice");
+    String user=inp.nextLine();
+    String[] Inp=user.split("\\s+");
+    int choosen;
+    if(!Inp[0].equals("DPO")) {
+    choosen= Integer.parseInt(Inp[1]);
+    
+    if(Inp[0].equals("D")) {
+    	    String cs= Inp[2];
+            String ct= Inp[3];
+    	    dijkstra dr=new dijkstra();
+    	    Node uN=binarytree.search(binarytree.root,choosen);
+    	    int s=0,t=0;
+    	    
+    	    for(int z=0;z < uN.city.length;z++) {	    	
+    	    	if(uN.city[z].trim().equals(cs)) s=z;
+    	    }
+    	    for(int q=0;q< uN.city.length;q++) {
+    	    	if(uN.city[q].trim().equals(ct)) t=q;
+    	    }
+    	   int x=dr.dijkstra(binarytree.search(binarytree.root, choosen), s, t);
+    	   System.out.println("\nTotal Distance : "+ x);
+    } 
+    else if(Inp[0].equals("P")) {
+    	   prim pr=new prim();
+    	   System.out.println(choosen);
+    	   pr.mst(binarytree.search(binarytree.root,Integer.parseInt(Inp[1])));
+    } }
+    else if(Inp[0].equals("DPO")) {
+    	dfs fordfs=new dfs();
+    	ArrayList <String> dfs=new ArrayList<String>();
+    	String s=binarytree.display(binarytree.root);
+    	String[]index=s.split("\\s+");        
+    	for(int j=0;j<index.length;j++) {
+    		System.out.println();
+    		fordfs.maindfs(binarytree.search(binarytree.root,Integer.parseInt(index[j])));
+    		
+    	}
+    	
+    }
+    
+   	 
+    
+	       
+}}
