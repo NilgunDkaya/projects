@@ -1,0 +1,40 @@
+package hw1;
+
+import java.util.LinkedList;
+
+public class MyLinkedList<T>
+{
+    private LinkedList<T> liste = new LinkedList<T>();
+
+    public void Add(T item)
+    {
+        liste.add(item);
+    }
+
+    public void AddFirst(T item)
+    {
+        liste.addFirst(item);
+    }
+    
+    public void AddLast(T item)
+    {
+        liste.addLast(item);
+    }
+
+    public T GetItem(int index)
+    {
+        return (T)(liste.get(index));
+    }
+
+    public void RemoveAt(int index)
+    {
+        
+        liste.remove(index);
+    }
+    
+    public int size()
+    {
+        return liste.size();
+    }
+
+}
