@@ -1,0 +1,40 @@
+
+package homework4;
+
+public class Rectangle extends Shape
+{
+    Line l1,l2;
+    double perimeter;
+    
+    public Rectangle(Line l1,Line l2)
+    {
+        super ("Rectangle");
+        this.l1=l1;
+        this.l2=l2;
+        try
+        {
+            setPerimeter();
+        }
+        catch(Exception e)
+           {
+              e.printStackTrace();
+           }
+    }
+
+    public double setPerimeter() throws Exception
+    {
+         if (l1==null || l2==null)
+        {
+            throw new Exception ("l1 veya l2 null olamaz");
+        }
+         
+        perimeter=((l1.getLength()*2)+(l2.getLength()*2));
+        return perimeter;
+    }
+    
+    public double getPerimeter()
+    {
+        return perimeter;
+    }
+    
+}
