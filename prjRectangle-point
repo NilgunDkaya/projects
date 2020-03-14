@@ -1,0 +1,53 @@
+
+package homework4;
+
+public class Point 
+{
+    private double x;
+    private double y;
+    
+    public Point()
+    {
+       x=1;
+       y=1;
+    }
+    
+    public Point(double x,double y) throws Exception
+    {
+       if (x<0 || y<0)
+       {
+           throw new Exception ("x veya y negatif olamaz");
+       }
+       this.x=x;
+       this.y=y;
+    }
+    
+    public double getX()
+    {
+        return x;
+    }
+    
+    public void setX(double x) throws Exception
+    {
+        if (x<0)
+        {
+            throw new Exception ("x negatif olamaz");
+        }
+        this.x=x;
+    }
+    
+    public double getY()
+    {
+        return y;
+    }
+    
+    public void setY(double y) throws Exception
+    {
+        if (y<0)
+        {
+            throw new Exception ("y negatif olamaz");
+        }
+        this.y=y;
+    }
+    
+}
